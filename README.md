@@ -1,2 +1,1 @@
-A basic template for starting a new ruby discord bot project using discordrb gem.
-
+Very basic bot for a discord server
