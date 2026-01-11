@@ -1,0 +1,10 @@
+services:
+  app:
+    image: abf5
+    build: ./app
+    ports:
+      - "7888:7888"
+    volumes:
+    - type: bind
+      source: ./app
+      target: /usr/src/app
