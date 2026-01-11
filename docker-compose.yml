@@ -1,6 +1,6 @@
 services:
   app:
-    image: abf5
+    image: musebot
     build: ./app
     ports:
       - "7888:7888"
