@@ -1,16 +1,39 @@
 require "csv"
 require "fileutils"
+require "active_support/all"
 
 USER_DATA_CSV = { headers: [:username, :total_posts] }
+MILESTONES = {
+  5 => {},
+  20 => {},
+  50 => {},
+  100 => {},
+  150 => {},
+  250 => {},
+  500 => {}
+}
 
 module Commands
   def set_commands()
     @bot.message() do |event|
       username = event.author.username
 
-      increment_user_post_count = -> (row) { row[:total_posts] += 1 }
+      new_number_of_posts = nil # idk why we're emulating JS in ruby, seems backward.
+      increment_user_post_count = -> (row) do
+        new_number_of_posts = row[:total_posts] + 1
+        row[:total_posts] += 1
+      end
 
       update_users_csv_for_user(username, increment_user_post_count)
+      puts "new_number_of_posts = #{new_number_of_posts.inspect}"
+      if new_number_of_posts.in?(MILESTONES.keys)
+        msg = <<~MSG
+        Congratulations to #{username} for hitting a milestone!
+        #{new_number_of_posts} posts!
+        MSG
+
+        event.respond(msg)
+      end
     end
   end
 
@@ -44,7 +67,6 @@ module Commands
         update_func.call(row)
         updated_csv << row
       end
-
     end
 
     FileUtils.cp(updated_csv_filepath, original_filepath)
