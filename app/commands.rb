@@ -1,6 +1,8 @@
 require "csv"
 require "fileutils"
 
+USER_DATA_CSV = { headers: [:username, :total_posts] }
+
 module Commands
   def set_commands()
     @bot.message() do |event|
@@ -37,7 +39,12 @@ module Commands
         updated_csv << row
       end
 
-      updated_csv << [username, 1] if !user_found
+      if !user_found
+        row = CSV::Row.new(USER_DATA_CSV[:headers], [username, 0])
+        update_func.call(row)
+        updated_csv << row
+      end
+
     end
 
     FileUtils.cp(updated_csv_filepath, original_filepath)
