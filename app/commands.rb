@@ -4,13 +4,30 @@ require "active_support/all"
 
 USER_DATA_CSV = { headers: [:username, :total_posts] }
 MILESTONES = {
-  5 => {},
-  20 => {},
-  50 => {},
-  100 => {},
-  150 => {},
-  250 => {},
-  500 => {}
+  5 => { emoji: ⭐️ },
+  20 => { emoji: ⭐️⭐️ },
+  50 => { emoji: ⭐️⭐️⭐️ },
+  100 => { emoji: 💎 },
+  150 => { emoji: 💎💎 },
+  250 => { emoji: 💎💎💎 },
+  500 => { emoji: 🐀 },
+  550 => { emoji: 🐂 },
+  600 => { emoji: 🐅 },
+  650 => { emoji: 🐇 },
+  700 => { emoji: 🐉 },
+  750 => { emoji: 🐍 },
+  800 => { emoji: 🐴 },
+  850 => { emoji: 🐐 },
+  900 => { emoji: 🐒 },
+  950 => { emoji: 🐓 },
+  1000 => { emoji: 🐕 },
+  1050 => { emoji: 🐖 },
+  1250 => { emoji: 👑 },
+  1300 => { emoji: 👑👑 },
+  1350 => { emoji: 👑👑👑 },
+  1400 => { emoji: 👑👑👑👑 },
+  1450 => { emoji: 👑👑👑👑👑 },
+  1500 => { emoji: 🍺 }
 }
 
 module Commands
@@ -25,9 +42,10 @@ module Commands
       end
 
       update_users_csv_for_user(username, increment_user_post_count)
-      
+
       if new_number_of_posts.in?(MILESTONES.keys)
         msg = <<~MSG
+        #{MILESTONES[new_number_of_posts][:emoji]}
         Congratulations to #{username} for hitting a milestone!
         #{new_number_of_posts} posts!
         MSG
