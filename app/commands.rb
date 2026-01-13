@@ -25,7 +25,7 @@ module Commands
       end
 
       update_users_csv_for_user(username, increment_user_post_count)
-      puts "new_number_of_posts = #{new_number_of_posts.inspect}"
+      
       if new_number_of_posts.in?(MILESTONES.keys)
         msg = <<~MSG
         Congratulations to #{username} for hitting a milestone!

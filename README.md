@@ -1,1 +1,1 @@
-Very basic bot for a discord server
+Cool discord bot for our dev server
